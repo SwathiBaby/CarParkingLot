@@ -1,9 +1,5 @@
 package com.swathiBaby.parkingLot;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-
 import com.swathiBaby.parkingLot.Service.ParkingDetailsService;
 import com.swathiBaby.parkingLot.ServiceImple.CommandPromptBasedInterpretor;
 import com.swathiBaby.parkingLot.ServiceImple.FileBasedInterpreter;
@@ -16,7 +12,11 @@ public class Main
 	    	 if(args.length==0) {
 	    		parkingService=new CommandPromptBasedInterpretor();
 	    	 }else if(args.length==1) {
-	    		 parkingService= new FileBasedInterpreter();
+	    		 try {
+	    		 parkingService= new FileBasedInterpreter(args[0]);
+	    		 }catch (NullPointerException e) {
+					System.out.println(e.getMessage());
+				}
 	    	 } 
 	    	 parkingService.start();
 	}
