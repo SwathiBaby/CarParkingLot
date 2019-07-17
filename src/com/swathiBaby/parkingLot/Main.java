@@ -17,7 +17,7 @@ public class Main
 	    		parkingService=new CommandPromptBasedInterpretor();
 	    	 }else if(args.length==1) {
 	    		 parkingService= new FileBasedInterpreter();
-	    	 }
+	    	 } 
 	    	 parkingService.start();
 	}
 }
