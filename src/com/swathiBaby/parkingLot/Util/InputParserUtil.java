@@ -4,13 +4,13 @@ import com.swathiBaby.parkingLot.Model.ParkingDetails;
 import com.swathiBaby.parkingLot.Service.ParkingDetailsService;
 
 public class InputParserUtil {
-	private static ParkingDetails[] lot = null;
+	private ParkingDetails[] lot = null;
 
-	private static final String commandList[] = { "create_parking_lot", "park", "leave", "status",
+	private final String commandList[] = { "create_parking_lot", "park", "leave", "status",
 			"registration_numbers_for_cars_with_colour", "slot_numbers_for_cars_with_colour",
 			"slot_number_for_registration_number" };
 
-	private static boolean iscommandExist(String command) {
+	private boolean iscommandExist(String command) {
 
 		for (int i = 0; i < commandList.length; i++) {
 			if (command == commandList[i]) {
@@ -22,7 +22,7 @@ public class InputParserUtil {
 
 	}
 
-	public static void parseTextInput(String inputString) {
+	public void parseTextInput(String inputString) {
 
 		String[] inputs = inputString.split(" ");
 		if (inputs.length != 0 && !iscommandExist(inputs[0])) {
@@ -61,12 +61,16 @@ public class InputParserUtil {
 		}
 	}
 
-	private static void createParkingLot(int lotSize) {
+	private void createParkingLot(int lotSize) {
 		lot = new ParkingDetails[lotSize];
 		System.out.println(String.format("Created a parking lot with %d slots", lot.length));
 	}
 
-	private static void parkingVehicle(String registration, String color) {
+	private void parkingVehicle(String registration, String color) {
+		if (lot == null || lot.length == 0) {
+			System.out.println("Sorry, parking lot is not created");
+			return;
+		}
 		int slot = -1;
 		for (int i = 0; i < lot.length; i++) {
 			if (lot[i] == null) {
@@ -87,21 +91,33 @@ public class InputParserUtil {
 
 	}
 
-	private static void leaveParkingSlot(int slot) {
+	private void leaveParkingSlot(int slot) {
+		if (lot == null || lot.length == 0) {
+			System.out.println("Sorry, parking lot is not created");
+			return;
+		}
 		boolean isvalidSlot = false;
+		int freeSlot = 0;
 		for (int i = 0; i < lot.length; i++) {
+			freeSlot += lot[i] == null ? 1 : 0;
 			if (lot[i] != null && lot[i].getSlotNumber() == slot) {
 				lot[i] = null;
+				System.out.println(String.format("Slot number %d is free", slot));
 				isvalidSlot = true;
 				break;
 			}
 		}
+		if (freeSlot == lot.length) {
+			System.out.println("Sorry,lot is empty");
+			return;
+		}
 		if (!isvalidSlot) {
-			System.out.println("Invalid slot number ");
+			System.out.println("Invalid slot number");
+
 		}
 	}
 
-	private static void statusOfParking() {
+	private void statusOfParking() {
 		System.out.println("Slot No.\tRegistration No.\tColor");
 		for (int i = 0; i < lot.length; i++) {
 			if (lot[i] != null) {
@@ -112,7 +128,7 @@ public class InputParserUtil {
 		}
 	}
 
-	private static void registrationNoBasedonColor(String color) {
+	private void registrationNoBasedonColor(String color) {
 		String registationNum = "";
 		for (int i = 0; i < lot.length; i++) {
 			if (lot[i] != null && lot[i].getColor().equalsIgnoreCase(color)) {
@@ -122,12 +138,11 @@ public class InputParserUtil {
 		if (registationNum.trim().length() != 0) {
 			System.out.println(registationNum.substring(0, registationNum.length() - 1));
 		} else {
-
 			System.out.println(String.format("Sorry, no car with this particular color %s", color));
 		}
 	}
 
-	private static void slotNumberBasedonColor(String color) {
+	private void slotNumberBasedonColor(String color) {
 		String registationNum = "";
 		for (int i = 0; i < lot.length; i++) {
 			if (lot[i] != null && lot[i].getColor().equalsIgnoreCase(color)) {
@@ -142,7 +157,7 @@ public class InputParserUtil {
 		}
 	}
 
-	private static void slotNumberBasedonRegistration(String registraionNumber) {
+	private void slotNumberBasedonRegistration(String registraionNumber) {
 		boolean registationNum = false;
 		for (int i = 0; i < lot.length; i++) {
 			if (lot[i] != null && lot[i].getRegistrationNo().equalsIgnoreCase(registraionNumber)) {
@@ -154,6 +169,10 @@ public class InputParserUtil {
 			System.out.println(
 					String.format("Sorry, no slot No with this particular registration Number %s", registraionNumber));
 		}
+	}
+
+	public int getLotSize() {
+		return lot.length;
 	}
 
 }

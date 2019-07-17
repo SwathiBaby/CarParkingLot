@@ -13,8 +13,8 @@ public class CommandPromptBasedInterpretor implements ParkingDetailsService {
 	public void start() {
 		/*System.out.println("Implementation type : "+CommandPromptBasedInterpretor.class.getName());*/
 		  System.out.println("Please enter 'exit' to quit");
-          System.out.println("Waiting for input...\n\n");
-          
+          System.out.println("Enter input ...\n");
+          InputParserUtil testing = new InputParserUtil();
 		
 		 for (;;) {
              try {
@@ -26,9 +26,8 @@ public class CommandPromptBasedInterpretor implements ParkingDetailsService {
                  } else if ((inputString == null) || (inputString.isEmpty())) {
                      // Do nothing
                  } else {
-                     InputParserUtil.parseTextInput(inputString.trim());
-                     System.out.println("Please enter 'exit' to quit");
-                     System.out.println("Waiting for input...\n\n");
+                	 testing.parseTextInput(inputString.trim());
+                  /*   System.out.println("\n");*/
                  }
                  
              } catch(IOException e) {

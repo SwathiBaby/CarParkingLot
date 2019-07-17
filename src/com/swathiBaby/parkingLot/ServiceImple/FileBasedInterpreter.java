@@ -26,14 +26,14 @@ public class FileBasedInterpreter  implements ParkingDetailsService{
 	@Override
 	public void start() {
 		System.out.println("Implementation type : "+FileBasedInterpreter.class.getName());
-		
+		InputParserUtil testing = new InputParserUtil();
 		
 	        try {
 	            BufferedReader br = new BufferedReader(new FileReader(inputFile));
 	            String line;
 	            try {
 	                while ((line = br.readLine()) != null) {
-	                	 InputParserUtil.parseTextInput(line.trim());
+	                	testing.parseTextInput(line.trim());
 	                    
 	                }
 	            } catch (IOException ex) {
