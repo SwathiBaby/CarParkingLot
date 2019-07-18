@@ -18,10 +18,7 @@ public class FileBasedInterpreter  implements ParkingDetailsService{
 		}
 	  this.filePath = filePath;
 	  inputFile= new File(filePath);
-	 /* if(inputFile==null || !inputFile.exists()) {
-		  throw new FileNotFoundException("File not found in the path specified");
-	  }*/
-     }
+	 }
 
 	@Override
 	public void start() {
@@ -34,7 +31,6 @@ public class FileBasedInterpreter  implements ParkingDetailsService{
 	            try {
 	                while ((line = br.readLine()) != null) {
 	                	testing.parseTextInput(line.trim());
-	                    
 	                }
 	            } catch (IOException ex) {
 	                System.out.println("Error in reading the input file.");

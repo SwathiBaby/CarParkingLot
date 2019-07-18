@@ -26,6 +26,9 @@ public class InputParserUtil {
 
 		String[] inputs = inputString.split(" ");
 		if (inputs.length != 0 && !iscommandExist(inputs[0])) {
+			if(!inputs[0].equals("create_parking_lot") && lotCreatedOrNot()) {
+				return; 
+			}
 			switch (inputs[0]) {
 			case "create_parking_lot":
 				createParkingLot(Integer.parseInt(inputs[1]));
@@ -67,10 +70,6 @@ public class InputParserUtil {
 	}
 
 	private void parkingVehicle(String registration, String color) {
-		if (lot == null || lot.length == 0) {
-			System.out.println("Sorry, parking lot is not created");
-			return;
-		}
 		int slot = -1;
 		for (int i = 0; i < lot.length; i++) {
 			if (lot[i] == null) {
@@ -92,10 +91,6 @@ public class InputParserUtil {
 	}
 
 	private void leaveParkingSlot(int slot) {
-		if (lot == null || lot.length == 0) {
-			System.out.println("Sorry, parking lot is not created");
-			return;
-		}
 		boolean isvalidSlot = false;
 		int freeSlot = 0;
 		for (int i = 0; i < lot.length; i++) {
@@ -173,6 +168,17 @@ public class InputParserUtil {
 
 	public int getLotSize() {
 		return lot.length;
+	}
+	
+	
+	private boolean lotCreatedOrNot(){
+		boolean lotIsEmpty=lot == null || lot.length == 0;
+		if(lotIsEmpty) {
+			
+			System.out.println("Sorry, parking lot is not created");
+			
+		}
+		return lotIsEmpty;
 	}
 
 }

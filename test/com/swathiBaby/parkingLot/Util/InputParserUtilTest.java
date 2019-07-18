@@ -71,6 +71,8 @@ class InputParserUtilTest {
 		assertEquals("Sorry,lotisempty", outContent.toString().trim().replace(" ", ""));
 		outContent.reset();
 	}
+	
+	
 
 	@Test
 	void registrationNoBasedonColor() {
@@ -91,6 +93,56 @@ class InputParserUtilTest {
 		outContent.reset();
 		testing.parseTextInput("registration_numbers_for_cars_with_colour red");
 		assertEquals("Sorry,nocarwiththisparticularcolorred", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+	}
+	
+	@Test
+	void slotNumberBasedonColorTest() {
+		testing.parseTextInput("park KA01HH3141 Black");
+		assertEquals("Sorry,parkinglotisnotcreated", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("create_parking_lot 3");
+		assertEquals("Createdaparkinglotwith3slots", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("park KA-01-HH-9932 White");
+		assertEquals("Allocatedslotnumber1", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("park KA-01-HH-9933 White");
+		assertEquals("Allocatedslotnumber2", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("park KA01HH3141 Black");
+		assertEquals("Allocatedslotnumber3", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("slot_numbers_for_cars_with_colour black");
+		assertEquals("3", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("slot_numbers_for_cars_with_colour blue");
+		assertEquals("Sorry,noslotNowiththisparticularcolorblue", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+	}
+	
+	@Test
+	void slotNumberBasedonRegistrationTest() {
+		testing.parseTextInput("park KA01HH3141 Black");
+		assertEquals("Sorry,parkinglotisnotcreated", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("create_parking_lot 3");
+		assertEquals("Createdaparkinglotwith3slots", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("park KA-01-HH-9932 White");
+		assertEquals("Allocatedslotnumber1", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("park KA-01-HH-9933 White");
+		assertEquals("Allocatedslotnumber2", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("park KA01HH3141 Black");
+		assertEquals("Allocatedslotnumber3", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("slot_number_for_registration_number KA01HH3141");
+		assertEquals("3", outContent.toString().trim().replace(" ", ""));
+		outContent.reset();
+		testing.parseTextInput("slot_number_for_registration_number MH04AY1111");
+		assertEquals("Sorry,noslotNowiththisparticularregistrationNumberMH04AY1111", outContent.toString().trim().replace(" ", ""));
 		outContent.reset();
 	}
 	
